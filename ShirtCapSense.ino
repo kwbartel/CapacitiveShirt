@@ -31,7 +31,7 @@ float baseline;
 float cap;
 int thresh;
 float average[] = {0, 0, 0, 0, 0};
-int led[] = {B00000000, B00000100, B00001100, B00011100, B00111100};
+int led[] = {B00000000, B00000100, B00001100, B00011100, B00111100}; // 
 
 void setup()
 {
