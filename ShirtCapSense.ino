@@ -20,7 +20,7 @@
 
 // Machine code and Port stuff from a forum post by ARP  http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1169088394/0#0
 
-
+// output pin is PortB0 (Arduino 8), sensor pin is PortB1 (Arduinio 9)
 int  i;
 unsigned int x, y;
 float accum, fout, fval = .07;    // these are variables for a simple low-pass (smoothing) filter - fval of 1 = no filter - .001 = max filter
@@ -150,30 +150,21 @@ void trashValues(int t)
 
 float getCap()
 {
-  y = 0;        // clear out variables
+  y = 0;                                 // clear out variables
   x = 0;
 
- for (i=0; i < 4 ; i++ ){       // do it four times to build up an average - not really neccessary but takes out some jitter
+ for (i=0; i < 4 ; i++ ){                // iterate x 4, take average
 
-   // LOW-to-HIGH transition
-   PORTB = PORTB | 1;                    // Same as line below -  shows programmer chops but doesn't really buy any more speed
-   // digitalWrite(8, HIGH);    
-   // output pin is PortB0 (Arduino 8), sensor pin is PortB1 (Arduinio 9)                                   
-
-   while ((PINB & B10) != B10 ) {        // while the sense pin is not high
-     //  while (digitalRead(9) != 1)     // same as above port manipulation above - only 20 times slower!                
+   PORTB = PORTB | 1;                    // digitalWrite(8, HIGH);                                         
+   while ((PINB & B10) != B10 ) {        //  while (digitalRead(9) != 1)                
      x++;
    }
    delay(1);
 
-   //  HIGH-to-LOW transition
-   PORTB = PORTB & 0xFE;                // Same as line below - these shows programmer chops but doesn't really buy any more speed
-   //digitalWrite(8, LOW);              
-   while((PINB & B10) != 0 ){            // while pin is not low  -- same as below only 20 times faster
-     // while(digitalRead(9) != 0 )      // same as above port manipulation - only 20 times slower!
+   PORTB = PORTB & 0xFE;                 //digitalWrite(8, LOW);              
+   while((PINB & B10) != 0 ){            // while(digitalRead(9) != 0 )      // same as above port manipulation - only 20 times slower!
      y++;  
    }
-
    delay(1);
  }
 
