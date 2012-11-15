@@ -58,14 +58,9 @@ void setup()
 }
 
 void loop()
-{
-  if (people < 0)
-    PORTD = led[0];
-  else if (people > 4)
-    PORTD = led[4];
-  else
-    PORTD = led[people];
-    
+{   
+  updateLED();
+  
   cap = getCap();
   updateAverage(cap);
   float avg = calcAverage();
@@ -97,6 +92,16 @@ void loop()
 
    delay(20);
    
+}
+
+void updateLED()
+{
+   if (people < 0)
+    PORTD = led[0];
+  else if (people > 4)
+    PORTD = led[4];
+  else
+    PORTD = led[people];
 }
 
 void fillAverage(float f)
