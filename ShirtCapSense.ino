@@ -42,7 +42,8 @@ void setup()
  
  Serial.println("---People Detector!---");
  
- thresh = 3;
+// thresh = 3;
+ thresh = 15;
  trashValues(500);
  baseline = newBaseLine();
  fillAverage(baseline);
